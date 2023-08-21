@@ -1,0 +1,21 @@
+{
+    "name": "pwa-text-editor",
+    "version": "1.0.0",
+    "description": "Progressive Web Applications (PWA) Text Editor",
+    "main": "server.js",
+    "scripts": {
+        "dev": "nodemon server.js --ignore client",
+        "server": "node server.js"
+    },
+    "keywords": [
+        "PWA"
+    ],
+    "author": "Mtan1230",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.18.2"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1"
+    }
+}

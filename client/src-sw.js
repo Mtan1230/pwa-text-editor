@@ -28,7 +28,19 @@ registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 // asset caching
 registerRoute(
-  ({request}) => request.destination === 'image',
+  ({ request }) => ['style', 'script', 'worker'].includes(request.destination),
+  new StaleWhileRevalidate({
+    cacheName: 'asset-cache',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  })
+);
+
+registerRoute(
+  ({ request }) => request.destination === 'image',
   new CacheFirst({
     cacheName: 'image-cache',
     plugins: [
@@ -37,18 +49,6 @@ registerRoute(
       }),
       new ExpirationPlugin({
         maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
-      }),
-    ],
-  })
-);
-
-registerRoute(
-  ({request}) => request.destination === 'style' || request.destination === 'script',
-  new StaleWhileRevalidate({
-    cacheName: 'static-resources',
-    plugins: [
-      new CacheableResponsePlugin({
-        statuses: [0, 200],
       }),
     ],
   })

@@ -20,7 +20,7 @@ export const putDb = async (content) => {
 
     const store = tx.objectStore('jate');
 
-    const request = store.add({ content });
+    const request = store.put({ id: 1, content: content });
 
     const result = await request;
   } catch (err) {
@@ -40,7 +40,7 @@ export const getDb = async () => {
   
     const result = await request;
 
-    return result;
+    return result.content;
   } catch (err) {
     console.error({message: 'getDb not implemented', err});
   }
